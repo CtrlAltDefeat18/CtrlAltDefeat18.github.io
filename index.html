@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Close The Gap | Bridging Digital Divides</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background-color: #f8f9fa;
+      color: #0A0A23;
+    }
+    header {
+      background-color: #0A0A23;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo img {
+      height: 80px;
+      width: auto;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .hero {
+      background: url('images/hero.jpg') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    .cta-button {
+      background-color: #00BFFF;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      margin-top: 2rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    section h2 {
+      font-family: 'Poppins', sans-serif;
+      color: #0A0A23;
+      border-bottom: 2px solid #00BFFF;
+      padding-bottom: 0.5rem;
+    }
+    section img.section-img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 1rem;
+      border-radius: 6px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li::before {
+      content: "✅ ";
+      color: #00BFFF;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    footer {
+      background-color: #0A0A23;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .donate-button {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #00BFFF;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .team-member {
+      flex: 1 1 250px;
+      text-align: center;
+    }
+    .team-member img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    @media(max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.jpg" alt="CTG Logo">
+  </div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#impact">Impact</a>
+    <a href="#blog">Blog</a>
+    <a href="#team">Team</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Empowering Underserved Communities Through Digital Equity & Cyber Awareness</h1>
+  <p>"Bridging the Digital Divide, Empowering the Future."</p>
+  <a href="#about" class="cta-button">Learn More</a>
+</section>
+
+<section id="about">
+  <h2>Who We Are</h2>
+  <p><strong>Vision:</strong> To create a future where digital equity empowers underserved youth and communities in rural and township areas.</p>
+  <p><strong>Mission:</strong> To bridge the digital divide through AI-driven education, digital skills training, and community-driven initiatives.</p>
+</section>
+
+<section id="services">
+  <h2>What We Do</h2>
+  <ul>
+    <li>Cyber Awareness & Online Safety</li>
+    <li>Offline-first Learning Platform via Raspberry Pi (chatbot, e-library, training modules)</li>
+    <li>Freemium training (TBC)</li>
+    <li>Community Partnerships (e.g., RUCE)</li>
+  </ul>
+  <img src="images/services.jpg" alt="Our Services" class="section-img">
+</section>
+
+<section id="impact">
+  <h2>Our Impact</h2>
+  <ul>
+    <li>Raise cyber awareness for mature adults — target: 50 by Sept 2025</li>
+    <li>Pilot offline-first platform with 10–20 learners from Makhanda schools</li>
+    <li>Tutor & mentor Grade 8–11 learners in business skills, entrepreneurship, career guidance</li>
+  </ul>
+  <img src="images/impact.jpg" alt="Community Impact" class="section-img">
+</section>
+
+<section id="blog">
+  <h2>Blog & Resources</h2>
+  <ul>
+    <li><a href="https://www.brookings.edu/articles/accelerating-digital-inclusion-in-africa/" target="_blank">Accelerating digital inclusion in Africa – Brookings</a></li>
+    <li><a href="https://arxiv.org/abs/2504.20308" target="_blank">Online Safety for Youth in the Global South – arXiv</a></li>
+    <li><a href="https://cic.nyu.edu/wp-content/uploads/1662/65/cic_pathfinders_digital_equity_as_an_enabling_platform_june_2021.pdf" target="_blank">Digital Equity as Enabling Platform – NYU CIC</a></li>
+  </ul>
+  <img src="images/blog.jpg" alt="Blog Resources" class="section-img">
+</section>
+
+<section id="team">
+  <h2>Our Team</h2>
+  <div class="team">
+    <div class="team-member">
+      <img src="apheleleheadshot.jpg" alt="Aphelele Mjobo">
+      <h3>Aphelele Mjobo</h3>
+      <p>Aphelele Mjobo is an IT: Systems Development student at the EBL Institute of Technology and a postgraduate student in enterprise management at Rhodes University. He co-founded CTG to merge education, social equity, and technology. With a background in law and community engagement, Aphelele leads CTG’s platform development, registration processes, and strategic direction. He is learning R for data analysis and exploring AI to support learners. Outside CTG, he enjoys gaming and Zen philosophy.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <form>
+    <input type="text" placeholder="Name" required />
+    <input type="email" placeholder="Email" required />
+    <textarea placeholder="Your message..." rows="5" required></textarea>
+    <button class="cta-button" type="submit">Send</button>
+  </form>
+  <p>Follow us on <a href="https://www.facebook.com/DigitalEquityCTG/" target="_blank">Facebook</a></p>
+  <a href="#" class="donate-button">Donate to CTG (Coming Soon)</a>
+</section>
+
+<footer>
+  <p>&copy; 2025 Close The Gap | Designed with ❤️ and purpose.</p>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY + window.innerHeight - 100;
+    sections.forEach(section => {
+      if (scrollY > section.offsetTop) {
+        section.classList.add('visible');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
