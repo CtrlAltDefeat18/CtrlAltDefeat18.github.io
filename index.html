@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Close The Gap | Bridging Digital Divides</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet">
   <style>
@@ -17,17 +17,20 @@
       color: #0A0A23;
     }
     header {
-      background-color: #0A0A23;
-      color: white;
-      padding: 1rem 2rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: linear-gradient(to right, #0A0A23 300px, transparent 300px), url('header-banner.jpg') no-repeat right center;
+      background-size: cover;
+      height: 140px;
     }
     .logo img {
-      height: 80px;
+      height: 120px;
       width: auto;
+    }
+    nav {
+      margin-left: auto;
     }
     nav a {
       margin: 0 1rem;
@@ -42,65 +45,92 @@
       background: url('images/hero.jpg') center/cover no-repeat;
       color: white;
       text-align: center;
-      padding: 6rem 2rem;
+      padding: 8rem 2rem;
     }
     .hero h1 {
       font-family: 'Poppins', sans-serif;
       font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      font-size: 1.2rem;
-    }
-    .cta-button {
-      background-color: #00BFFF;
-      color: #fff;
-      padding: 0.8rem 1.5rem;
-      margin-top: 2rem;
-      border: none;
+      background: rgba(0, 0, 0, 0.5);
+      display: inline-block;
+      padding: 0.5rem 1rem;
       border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
     }
-    section {
+    .section {
       padding: 3rem 2rem;
-      max-width: 1000px;
+      max-width: 1200px;
       margin: auto;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    section h2 {
+    .section h2 {
       font-family: 'Poppins', sans-serif;
-      color: #0A0A23;
       border-bottom: 2px solid #00BFFF;
       padding-bottom: 0.5rem;
     }
-    section img.section-img {
-      max-width: 100%;
-      height: auto;
-      margin-top: 1rem;
-      border-radius: 6px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul li::before {
-      content: "✅ ";
-      color: #00BFFF;
-    }
-    form input, form textarea {
+    .section img.section-img {
       width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
+      height: auto;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    .team-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .team-member {
+      width: 300px;
+      background: white;
+      padding: 1rem;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .team-member:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .team-member img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .bio-collapse {
+      max-height: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bio-collapse.expanded {
+      max-height: none;
+    }
+    .read-more {
+      color: #007BFF;
+      cursor: pointer;
+      display: block;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background-color: #00BFFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .contact-info {
+      margin-top: 2rem;
     }
     footer {
       background-color: #0A0A23;
@@ -108,41 +138,15 @@
       text-align: center;
       padding: 1.5rem;
     }
-    .donate-button {
-      display: inline-block;
-      margin-top: 1rem;
-      background-color: #00BFFF;
-      color: white;
-      padding: 0.7rem 1.2rem;
-      border-radius: 4px;
-      text-decoration: none;
-    }
-    .team {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
-    .team-member {
-      flex: 1 1 250px;
-      text-align: center;
-    }
-    .team-member img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    @media(max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 1rem;
-      }
-    }
   </style>
+  <script>
+    function toggleBio(id) {
+      const content = document.getElementById(id);
+      const toggle = document.getElementById('toggle-' + id);
+      content.classList.toggle('expanded');
+      toggle.innerText = content.classList.contains('expanded') ? 'Read Less' : 'Read More';
+    }
+  </script>
 </head>
 <body>
 
@@ -154,93 +158,101 @@
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#impact">Impact</a>
-    <a href="#blog">Blog</a>
     <a href="#team">Team</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
 <section class="hero">
-  <h1>Empowering Underserved Communities Through Digital Equity & Cyber Awareness</h1>
-  <p>"Bridging the Digital Divide, Empowering the Future."</p>
-  <a href="#about" class="cta-button">Learn More</a>
+  <h1>Empowering Underserved Communities Through Digital Equity</h1>
 </section>
 
-<section id="about">
+<section id="about" class="section">
   <h2>Who We Are</h2>
   <p><strong>Vision:</strong> To create a future where digital equity empowers underserved youth and communities in rural and township areas.</p>
   <p><strong>Mission:</strong> To bridge the digital divide through AI-driven education, digital skills training, and community-driven initiatives.</p>
 </section>
 
-<section id="services">
+<section id="services" class="section">
   <h2>What We Do</h2>
   <ul>
     <li>Cyber Awareness & Online Safety</li>
-    <li>Offline-first Learning Platform via Raspberry Pi (chatbot, e-library, training modules)</li>
-    <li>Freemium training (TBC)</li>
+    <li>Offline-first Learning Platform via Raspberry Pi</li>
+    <li>Freemium Training (TBC)</li>
     <li>Community Partnerships (e.g., RUCE)</li>
   </ul>
-  <img src="images/services.jpg" alt="Our Services" class="section-img">
+  <img src="images/services.jpg" class="section-img" alt="Our Services">
 </section>
 
-<section id="impact">
+<section id="impact" class="section">
   <h2>Our Impact</h2>
   <ul>
     <li>Raise cyber awareness for mature adults — target: 50 by Sept 2025</li>
     <li>Pilot offline-first platform with 10–20 learners from Makhanda schools</li>
     <li>Tutor & mentor Grade 8–11 learners in business skills, entrepreneurship, career guidance</li>
   </ul>
-  <img src="images/impact.jpg" alt="Community Impact" class="section-img">
+  <img src="images/impact.jpg" class="section-img" alt="Our Impact">
 </section>
 
-<section id="blog">
-  <h2>Blog & Resources</h2>
-  <ul>
-    <li><a href="https://www.brookings.edu/articles/accelerating-digital-inclusion-in-africa/" target="_blank">Accelerating digital inclusion in Africa – Brookings</a></li>
-    <li><a href="https://arxiv.org/abs/2504.20308" target="_blank">Online Safety for Youth in the Global South – arXiv</a></li>
-    <li><a href="https://cic.nyu.edu/wp-content/uploads/1662/65/cic_pathfinders_digital_equity_as_an_enabling_platform_june_2021.pdf" target="_blank">Digital Equity as Enabling Platform – NYU CIC</a></li>
-  </ul>
-  <img src="images/blog.jpg" alt="Blog Resources" class="section-img">
-</section>
-
-<section id="team">
+<section id="team" class="section">
   <h2>Our Team</h2>
-  <div class="team">
+  <div class="team-container">
     <div class="team-member">
       <img src="apheleleheadshot.jpg" alt="Aphelele Mjobo">
       <h3>Aphelele Mjobo</h3>
-      <p>Aphelele Mjobo is an IT: Systems Development student at the EBL Institute of Technology and a postgraduate student in enterprise management at Rhodes University. He co-founded CTG to merge education, social equity, and technology. With a background in law and community engagement, Aphelele leads CTG’s platform development, registration processes, and strategic direction. He is learning R for data analysis and exploring AI to support learners. Outside CTG, he enjoys gaming and Zen philosophy.</p>
+      <p><strong>Co-Founder & Technical Lead</strong></p>
+      <div id="bio-aphelele" class="bio-collapse">
+        <p>Aphelele Mjobo is an IT: Systems Development student at the EBL Institute of Technology and a postgraduate student in enterprise management at Rhodes University, driven by a mission to build scalable, offline-first digital education tools for underserved communities. He co-founded CTG to merge education, social equity, and technology, ensuring that even the most remote learners have access to quality academic resources. With a background in community engagement and law, Aphelele leads CTG’s platform development, registration processes, and strategic direction. He is currently sharpening his data analysis skills through R programming on DataCamp and exploring the use of AI tools to enhance learner support across CTG’s platform. Outside of CTG, Aphelele enjoys gaming and reading spiritual texts on Zen, balance, and intentional living. He believes in the power of design and data to drive change, guided by the principle: "Artificial intelligence is not the future. It’s the present — we just haven’t caught up yet.”</p>
+      </div>
+      <span class="read-more" id="toggle-bio-aphelele" onclick="toggleBio('bio-aphelele')">Read More</span>
+    </div>
+
+    <div class="team-member">
+      <img src="luthandoheadshot.jpg" alt="Luthando David">
+      <h3>Luthando David</h3>
+      <p><strong>Co-Founder</strong></p>
+      <div id="bio-luthando" class="bio-collapse">
+        <p>Luthando David is a Bachelor of Arts graduate in Legal Theory and History from Rhodes University, currently furthering their studies through a Postgraduate Diploma in Enterprise Management. Passionate about youth empowerment, education equity, and ethical leadership, Luthando is committed to building inclusive systems that prioritise people, potential, and purpose. Throughout their undergraduate journey, Luthando held key leadership roles — serving as Head Student of Residence and as part of the Student Representative Council projects team — where they led community-building initiatives that brought together students across diverse backgrounds. As a Philosophy Department tutor, they supported academic growth and critical thinking, mentoring students through complex content and reflective learning. Luthando is also actively involved in the Peer Educator Programme, using dialogue and peer support to promote holistic student wellness and mental health awareness on campus. Their commitment to social impact extends to community-level initiatives such as digital equity work through Close the Gap. With a growing interest in organisational change, ethical entrepreneurship, and sustainable development, Luthando sees enterprise as a powerful tool for social transformation.</p>
+      </div>
+      <span class="read-more" id="toggle-bio-luthando" onclick="toggleBio('bio-luthando')">Read More</span>
+    </div>
+
+    <div class="team-member">
+      <img src="unathiheadshot.jpg" alt="Unathi Gongxeka">
+      <h3>Unathi Gongxeka</h3>
+      <p><strong>Co-Founder & Financial Manager</strong></p>
+      <div id="bio-unathi" class="bio-collapse">
+        <p>Unathi is currently pursuing a Postgraduate Diploma in Enterprise Management at Rhodes University, she brings a blend of academic insight and real-world experience to her evolving professional journey. Before returning to academia, she worked as a Junior HR Business Partner at Standard Bank Group, where she developed a strong foundation in talent management. This transition marks her second academic chapter at Rhodes University, having previously earned a Bachelor of Social Sciences Honours degree in Politics and International Studies. Stepping away from the corporate has allowed her to reflect deeply on the kind of impactful work she would like to be part of. This period of introspection led her to explore roles that align with purpose-driven impact, such as career guidance for high school scholars, where she can blend her HR background with a passion for youth development. What draws me to Close The Gap as an emerging NPO is its commitment to closing the digital divide, particularly in an economic context that increasingly demands digital literacy and skills. I admire its inclusive approach to empowering underserved communities—both in rural and urban settings—by ensuring access to the tools, knowledge, and opportunities needed to participate meaningfully in the digital economy. Outside of work and study, she enjoys hiking, reading, and embracing experiences that foster growth and connection. A quote that she lives by is : “ The best way to find yourself is to lose yourself in the service of others.” by Mahatma Gandhi</p>
+      </div>
+      <span class="read-more" id="toggle-bio-unathi" onclick="toggleBio('bio-unathi')">Read More</span>
     </div>
   </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="section">
   <h2>Contact Us</h2>
-  <form>
-    <input type="text" placeholder="Name" required />
-    <input type="email" placeholder="Email" required />
-    <textarea placeholder="Your message..." rows="5" required></textarea>
-    <button class="cta-button" type="submit">Send</button>
+  <form class="contact-form" action="https://formspree.io/f/yourFormIDHere" method="POST">
+    <input type="text" name="name" placeholder="Name and Surname" required>
+    <input type="email" name="_replyto" placeholder="Email Address" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
   </form>
-  <p>Follow us on <a href="https://www.facebook.com/DigitalEquityCTG/" target="_blank">Facebook</a></p>
-  <a href="#" class="donate-button">Donate to CTG (Coming Soon)</a>
+
+  <div class="contact-info">
+    <p><strong>Email:</strong> helloclosethegap@gmail.com</p>
+    <p><strong>Phone:</strong></p>
+    <ul>
+      <li>Unathi: 063 001 1578</li>
+      <li>Luthando: 063 656 6917</li>
+      <li>Aphelele: 083 516 3140</li>
+    </ul>
+    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/DigitalEquityCTG/" target="_blank">Visit Our Page</a></p>
+  </div>
 </section>
 
 <footer>
   <p>&copy; 2025 Close The Gap | Designed with ❤️ and purpose.</p>
 </footer>
-
-<script>
-  const sections = document.querySelectorAll('section');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY + window.innerHeight - 100;
-    sections.forEach(section => {
-      if (scrollY > section.offsetTop) {
-        section.classList.add('visible');
-      }
-    });
-  });
-</script>
 
 </body>
 </html>
