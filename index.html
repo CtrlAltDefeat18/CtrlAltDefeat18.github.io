@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Close The Gap | Bridging Digital Divides</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+
+  <!-- SEO & Social -->
+  <meta name="description" content="CTG bridges the digital divide by empowering underserved youth and communities in rural and township areas through digital education and AI-powered tools." />
+  <meta property="og:title" content="Close The Gap | Bridging Digital Divides" />
+  <meta property="og:description" content="Empowering underserved communities through digital skills and offline-first learning platforms." />
+  <meta property="og:image" content="images/hero.jpg" />
+  <meta property="og:url" content="https://yourdomain.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <style>
     * {
       box-sizing: border-box;
@@ -21,13 +31,21 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      background: linear-gradient(to right, #0A0A23 300px, transparent 300px), url('header-banner.jpg') no-repeat right center;
-      background-size: cover;
+      background-color: #0A0A23;  /* solid black background */
       height: 140px;
     }
-    .logo img {
+    .logo {
       height: 120px;
       width: auto;
+      flex-shrink: 0;
+      position: relative;
+    }
+    /* Container for video logo */
+    .logo video {
+      height: 120px;
+      width: auto;
+      display: block;
+      object-fit: contain;
     }
     nav {
       margin-left: auto;
@@ -96,21 +114,61 @@
       object-fit: cover;
       border-radius: 50%;
     }
-    .bio-collapse {
-      max-height: 100px;
-      overflow: hidden;
-      position: relative;
-    }
-    .bio-collapse.expanded {
-      max-height: none;
-    }
-    .read-more {
-      color: #007BFF;
+    .view-bio-btn {
+      margin-top: 1rem;
+      background-color: #00BFFF;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
       cursor: pointer;
-      display: block;
-      margin-top: 0.5rem;
       font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
     }
+    .view-bio-btn:hover {
+      background-color: #008fcc;
+    }
+
+    /* Modal styling */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      background-color: rgba(0,0,0,0.6);
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    .modal-content {
+      background-color: white;
+      margin: auto;
+      padding: 1.5rem 2rem;
+      border-radius: 10px;
+      max-width: 600px;
+      position: relative;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #555;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .modal-close:hover {
+      color: #00BFFF;
+    }
+
+    /* Contact form styles */
     .contact-form input,
     .contact-form textarea {
       width: 100%;
@@ -128,6 +186,10 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .contact-form button:hover {
+      background-color: #008fcc;
     }
     .contact-info {
       margin-top: 2rem;
@@ -138,13 +200,81 @@
       text-align: center;
       padding: 1.5rem;
     }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 1rem;
+      }
+      nav a {
+        display: block;
+        margin: 0.5rem 0;
+        color: white;
+      }
+      .team-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .team-member {
+        width: 90%;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+    }
   </style>
+
   <script>
-    function toggleBio(id) {
-      const content = document.getElementById(id);
-      const toggle = document.getElementById('toggle-' + id);
-      content.classList.toggle('expanded');
-      toggle.innerText = content.classList.contains('expanded') ? 'Read Less' : 'Read More';
+    // Modal open/close logic
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'block';
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    // Close modal on overlay click
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if(event.target === modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+    // Contact form submission handler with alert + redirect
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = new FormData(form);
+      // Add honeypot field check
+      if(data.get('_gotcha')) {
+        // Bot detected, do nothing
+        return;
+      }
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        alert('Thank you for your message! We will get back to you soon.');
+        form.reset();
+        setTimeout(() => {
+          window.location.href = '#contact';
+        }, 3000);
+      } else {
+        alert('Oops! There was a problem submitting your form. Please try again.');
+      }
     }
   </script>
 </head>
@@ -152,7 +282,11 @@
 
 <header>
   <div class="logo">
-    <img src="logo.jpg" alt="CTG Logo">
+    <video autoplay muted loop playsinline>
+      <source src="logo.mp4" type="video/mp4" />
+      <!-- Fallback image -->
+      <img src="logo.png" alt="CTG Logo" />
+    </video>
   </div>
   <nav>
     <a href="#about">About</a>
@@ -181,7 +315,7 @@
     <li>Freemium Training (TBC)</li>
     <li>Community Partnerships (e.g., RUCE)</li>
   </ul>
-  <img src="images/services.jpg" class="section-img" alt="Our Services">
+  <img src="images/services.jpg" class="section-img" alt="Our Services" />
 </section>
 
 <section id="impact" class="section">
@@ -191,49 +325,69 @@
     <li>Pilot offline-first platform with 10–20 learners from Makhanda schools</li>
     <li>Tutor & mentor Grade 8–11 learners in business skills, entrepreneurship, career guidance</li>
   </ul>
-  <img src="images/impact.jpg" class="section-img" alt="Our Impact">
+  <img src="images/impact.jpg" class="section-img" alt="Our Impact" />
 </section>
 
 <section id="team" class="section">
   <h2>Our Team</h2>
   <div class="team-container">
+
     <div class="team-member">
-      <img src="apheleleheadshot.jpg" alt="Aphelele Mjobo">
+      <img src="apheleleheadshot.jpg" alt="Aphelele Mjobo" />
       <h3>Aphelele Mjobo</h3>
       <p><strong>Co-Founder & Technical Lead</strong></p>
-      <div id="bio-aphelele" class="bio-collapse">
-        <p>Aphelele Mjobo is an IT: Systems Development student at the EBL Institute of Technology and a postgraduate student in enterprise management at Rhodes University, driven by a mission to build scalable, offline-first digital education tools for underserved communities. He co-founded CTG to merge education, social equity, and technology, ensuring that even the most remote learners have access to quality academic resources. With a background in community engagement and law, Aphelele leads CTG’s platform development, registration processes, and strategic direction. He is currently sharpening his data analysis skills through R programming on DataCamp and exploring the use of AI tools to enhance learner support across CTG’s platform. Outside of CTG, Aphelele enjoys gaming and reading spiritual texts on Zen, balance, and intentional living. He believes in the power of design and data to drive change, guided by the principle: "Artificial intelligence is not the future. It’s the present — we just haven’t caught up yet.”</p>
-      </div>
-      <span class="read-more" id="toggle-bio-aphelele" onclick="toggleBio('bio-aphelele')">Read More</span>
+      <button class="view-bio-btn" onclick="openModal('modal-aphelele')">View Bio</button>
     </div>
 
     <div class="team-member">
-      <img src="luthandoheadshot.jpg" alt="Luthando David">
+      <img src="luthandoheadshot.jpg" alt="Luthando David" />
       <h3>Luthando David</h3>
       <p><strong>Co-Founder</strong></p>
-      <div id="bio-luthando" class="bio-collapse">
-        <p>Luthando David is a Bachelor of Arts graduate in Legal Theory and History from Rhodes University, currently furthering their studies through a Postgraduate Diploma in Enterprise Management. Passionate about youth empowerment, education equity, and ethical leadership, Luthando is committed to building inclusive systems that prioritise people, potential, and purpose. Throughout their undergraduate journey, Luthando held key leadership roles — serving as Head Student of Residence and as part of the Student Representative Council projects team — where they led community-building initiatives that brought together students across diverse backgrounds. As a Philosophy Department tutor, they supported academic growth and critical thinking, mentoring students through complex content and reflective learning. Luthando is also actively involved in the Peer Educator Programme, using dialogue and peer support to promote holistic student wellness and mental health awareness on campus. Their commitment to social impact extends to community-level initiatives such as digital equity work through Close the Gap. With a growing interest in organisational change, ethical entrepreneurship, and sustainable development, Luthando sees enterprise as a powerful tool for social transformation.</p>
-      </div>
-      <span class="read-more" id="toggle-bio-luthando" onclick="toggleBio('bio-luthando')">Read More</span>
+      <button class="view-bio-btn" onclick="openModal('modal-luthando')">View Bio</button>
     </div>
 
     <div class="team-member">
-      <img src="unathiheadshot.jpg" alt="Unathi Gongxeka">
+      <img src="unathiheadshot.jpg" alt="Unathi Gongxeka" />
       <h3>Unathi Gongxeka</h3>
       <p><strong>Co-Founder & Financial Manager</strong></p>
-      <div id="bio-unathi" class="bio-collapse">
-        <p>Unathi is currently pursuing a Postgraduate Diploma in Enterprise Management at Rhodes University, she brings a blend of academic insight and real-world experience to her evolving professional journey. Before returning to academia, she worked as a Junior HR Business Partner at Standard Bank Group, where she developed a strong foundation in talent management. This transition marks her second academic chapter at Rhodes University, having previously earned a Bachelor of Social Sciences Honours degree in Politics and International Studies. Stepping away from the corporate has allowed her to reflect deeply on the kind of impactful work she would like to be part of. This period of introspection led her to explore roles that align with purpose-driven impact, such as career guidance for high school scholars, where she can blend her HR background with a passion for youth development. What draws me to Close The Gap as an emerging NPO is its commitment to closing the digital divide, particularly in an economic context that increasingly demands digital literacy and skills. I admire its inclusive approach to empowering underserved communities—both in rural and urban settings—by ensuring access to the tools, knowledge, and opportunities needed to participate meaningfully in the digital economy. Outside of work and study, she enjoys hiking, reading, and embracing experiences that foster growth and connection. A quote that she lives by is : “ The best way to find yourself is to lose yourself in the service of others.” by Mahatma Gandhi</p>
-      </div>
-      <span class="read-more" id="toggle-bio-unathi" onclick="toggleBio('bio-unathi')">Read More</span>
+      <button class="view-bio-btn" onclick="openModal('modal-unathi')">View Bio</button>
     </div>
+
   </div>
 </section>
 
+<!-- Modals for bios -->
+<div id="modal-aphelele" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-aphelele" tabindex="-1">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-aphelele')">&times;</button>
+    <h2 id="modal-title-aphelele">Aphelele Mjobo</h2>
+    <p>Aphelele Mjobo is an IT: Systems Development student at the EBL Institute of Technology and a postgraduate student in enterprise management at Rhodes University, driven by a mission to build scalable, offline-first digital education tools for underserved communities. He co-founded CTG to merge education, social equity, and technology, ensuring that even the most remote learners have access to quality academic resources. With a background in community engagement and law, Aphelele leads CTG’s platform development, registration processes, and strategic direction. He is currently sharpening his data analysis skills through R programming on DataCamp and exploring the use of AI tools to enhance learner support across CTG’s platform. Outside of CTG, Aphelele enjoys gaming and reading spiritual texts on Zen, balance, and intentional living. He believes in the power of design and data to drive change, guided by the principle: "Artificial intelligence is not the future. It’s the present — we just haven’t caught up yet.”</p>
+  </div>
+</div>
+
+<div id="modal-luthando" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-luthando" tabindex="-1">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-luthando')">&times;</button>
+    <h2 id="modal-title-luthando">Luthando David</h2>
+    <p>Luthando David is a Bachelor of Arts graduate in Legal Theory and History from Rhodes University, currently furthering their studies through a Postgraduate Diploma in Enterprise Management. Passionate about youth empowerment, education equity, and ethical leadership, Luthando is committed to building inclusive systems that prioritise people, potential, and purpose. Throughout their undergraduate journey, Luthando held key leadership roles — serving as Head Student of Residence and as part of the Student Representative Council projects team — where they led community-building initiatives that brought together students across diverse backgrounds. As a Philosophy Department tutor, they supported academic growth and critical thinking, mentoring students through complex content and reflective learning. Luthando is also actively involved in the Peer Educator Programme, using dialogue and peer support to promote holistic student wellness and mental health awareness on campus. Their commitment to social impact extends to community-level initiatives such as digital equity work through Close The Gap. With a growing interest in organisational change, ethical entrepreneurship, and sustainable development, Luthando sees enterprise as a powerful tool for social transformation.</p>
+  </div>
+</div>
+
+<div id="modal-unathi" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-unathi" tabindex="-1">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-unathi')">&times;</button>
+    <h2 id="modal-title-unathi">Unathi Gongxeka</h2>
+    <p>Unathi is currently pursuing a Postgraduate Diploma in Enterprise Management at Rhodes University, she brings a blend of academic insight and real-world experience to her evolving professional journey. Before returning to academia, she worked as a Junior HR Business Partner at Standard Bank Group, where she developed a strong foundation in talent management. This transition marks her second academic chapter at Rhodes University, having previously earned a Bachelor of Social Sciences Honours degree in Politics and International Studies. Stepping away from the corporate has allowed her to reflect deeply on the kind of impactful work she would like to be part of. This period of introspection led her to explore roles that align with purpose-driven impact, such as career guidance for high school scholars, where she can blend her HR background with a passion for youth development. What draws me to Close The Gap as an emerging NPO is its commitment to closing the digital divide, particularly in an economic context that increasingly demands digital literacy and skills. I admire its inclusive approach to empowering underserved communities—both in rural and urban settings—by ensuring access to the tools, knowledge, and opportunities needed to participate meaningfully in the digital economy. Outside of work and study, she enjoys hiking, reading, and embracing experiences that foster growth and connection. A quote that she lives by is : “ The best way to find yourself is to lose yourself in the service of others.” by Mahatma Gandhi</p>
+  </div>
+</div>
+
 <section id="contact" class="section">
   <h2>Contact Us</h2>
-  <form class="contact-form" action="https://formspree.io/f/yourFormIDHere" method="POST">
-    <input type="text" name="name" placeholder="Name and Surname" required>
-    <input type="email" name="_replyto" placeholder="Email Address" required>
+  <form class="contact-form" action="https://formspree.io/f/mqaledry" method="POST" onsubmit="handleSubmit(event)">
+    <input type="text" name="name" placeholder="Name and Surname" required />
+    <input type="email" name="_replyto" placeholder="Email Address" required />
+    <!-- Honeypot field to catch bots -->
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
     <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
     <button type="submit">Send</button>
   </form>
@@ -246,7 +400,10 @@
       <li>Luthando: 063 656 6917</li>
       <li>Aphelele: 083 516 3140</li>
     </ul>
-    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/DigitalEquityCTG/" target="_blank">Visit Our Page</a></p>
+    <p>
+      <strong>Facebook:</strong>
+      <a href="https://www.facebook.com/DigitalEquityCTG/" target="_blank" rel="noopener noreferrer">Visit Our Page</a>
+    </p>
   </div>
 </section>
 
